@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -23,13 +27,36 @@ public class MainActivity extends Activity {
 
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<String>();
+        readItems();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        items.add("Shower");
-        items.add("Breakfast");
-        items.add("Exercise");
+        /*
+        items.add("This is an Item");
+        items.add("Remove with long touch");
+        items.add("Have a good day");
+        */
         //setup remove listener method call
         setupListViewListener();
+    }
+
+    private void readItems(){
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try{
+            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeItems () {
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try{
+            FileUtils.writeLines(todoFile, items);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void onAddItem(View v){
@@ -37,6 +64,8 @@ public class MainActivity extends Activity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+        //Write Items to file
+        writeItems();
     }
 
     //attaches a long click listener to the lisview
@@ -49,6 +78,8 @@ public class MainActivity extends Activity {
                         items.remove(pos);
                         //Refresh the adapter
                         itemsAdapter.notifyDataSetChanged();
+                        //write changes to file
+                        writeItems();
                         //Return true marks longClick event handled
                         return true;
                     }
