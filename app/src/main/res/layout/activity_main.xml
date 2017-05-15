@@ -51,7 +51,7 @@
 
         <Button
             android:id="@+id/btnAddItem"
-            style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+            style="@android:style/Widget.DeviceDefault.Light.Button.Inset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
