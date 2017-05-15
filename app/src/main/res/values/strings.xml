@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">To-Do-First</string>
+    <string name="item_input_hint">Enter a new item</string>
+    <string name="add_item_button">Add Item</string>
+</resources>
