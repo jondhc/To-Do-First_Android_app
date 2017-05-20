@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
         readItems();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
+
         /*
         items.add("This is an Item");
         items.add("Remove with long touch");
